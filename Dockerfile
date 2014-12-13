@@ -17,6 +17,8 @@ RUN apt-get install -y php5-cli php5-mysql php5-pgsql php5-sqlite php5-curl\
 
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
+RUN useradd -ms /bin/bash www-data
+
 # Create folder for server and add index.php file to for nginx
 RUN mkdir -p /var/www/html && chmod a+r /var/www/html && echo "<?php phpinfo(); ?>" > /var/www/html/index.php
 
@@ -44,4 +46,4 @@ RUN chmod a+x /run.sh
 EXPOSE 80
 
 #Start supervisord
-ENTRYPOINT ["/run.sh"]
+ENTRYPOINT ["RUN chown -R node:node /var/www/html", "/run.sh"]
