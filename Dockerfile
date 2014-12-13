@@ -44,4 +44,4 @@ RUN chmod a+x /run.sh
 EXPOSE 80
 
 #Start supervisord
-ENTRYPOINT ["RUN chown -R node:node /var/www/html", "/run.sh"]
+ENTRYPOINT ["RUN chown -R www-data:www-data /var/www/html", "/run.sh"]
