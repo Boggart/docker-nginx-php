@@ -44,4 +44,4 @@ RUN chmod a+x /run.sh
 EXPOSE 80
 
 #Start supervisord
-CMD ["chown -R www-data:www-data /var/www/html", "/run.sh"]
+CMD ["/run.sh"]
