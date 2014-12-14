@@ -16,9 +16,9 @@ RUN apt-get install -y php5-cli php5-mysql php5-pgsql php5-sqlite php5-curl\
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy php5-fpm supervisor nginx \
                && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# ADD Nginx and php-fpm config
+# ADD Nginx config
 ADD build/nginx.conf /etc/nginx/conf.d/default.conf
-RUN echo "cgi.fix_pathinfo = 0;" >> /etc/php5/fpm/php.ini
+
 RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
 
 # ADD supervisord config
