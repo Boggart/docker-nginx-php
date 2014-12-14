@@ -16,10 +16,11 @@ RUN apt-get install -y php5-cli php5-mysql php5-pgsql php5-sqlite php5-curl\
 		       php5-gd php5-mcrypt php5-intl php5-imap php5-tidy php5-fpm supervisor nginx \
                && apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
-# ADD Nginx config
-ADD build/nginx.conf /etc/nginx/conf.d/default.conf
-
-RUN mkdir -p /var/www && chown -R www-data:www-data /var/www
+# ADD Nginx and php-fpm config
+ADD build/nginx.conf /etc/nginx/sites-available/default
+RUN sed -i -e "s/upload_max_filesize\s*=\s*2M/upload_max_filesize = 100M/g" /etc/php5/fpm/php.ini
+RUN sed -i -e "s/post_max_size\s*=\s*8M/post_max_size = 100M/g" /etc/php5/fpm/php.ini
+RUN mkdir -p /var/www && chown -R www-data:www-data /var/www && echo "<?php phpinfo(); ?>" > /var/www/phpinfo.php
 
 # ADD supervisord config
 ADD build/supervisord.conf /etc/supervisord.conf
